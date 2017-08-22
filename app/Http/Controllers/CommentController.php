@@ -10,8 +10,8 @@ class CommentController extends Controller
 {
     public function index($id){
 
-
-    return Post::find($id)->comments;
+$comment = Comment::where("post_id",$id)->get();
+     return $comment;
     
     }
     public function create(Request $request){

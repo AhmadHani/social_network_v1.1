@@ -50739,18 +50739,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
         this.get_feed();
-        this.get_my_posts();
+        this.my_posts();
     },
 
     components: {
         Like: __WEBPACK_IMPORTED_MODULE_0__Like_vue___default.a, Comment: __WEBPACK_IMPORTED_MODULE_1__Comment_vue___default.a
     },
-    data: function data() {
-        return {
-            profile: this.giveprofile
-        };
-    },
-
     props: ['giveprofile'],
     methods: {
         get_feed: function get_feed() {
@@ -50762,7 +50756,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             });
         },
-        get_my_posts: function get_my_posts() {
+        my_posts: function my_posts() {
             var _this2 = this;
 
             axios.get("/my_posts").then(function (resp) {
@@ -50774,10 +50768,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         posts: function posts() {
-            if (this.profile === true) {
-                return this.$store.getters.all_posts;
-            } else {
+            if (this.giveprofile === true) {
                 return this.$store.getters.my_posts;
+            } else {
+                return this.$store.getters.all_posts;
             }
         }
     }
@@ -51018,9 +51012,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['id'],
-    mounted: function mounted() {
-        this.get_comments();
-    },
+    mounted: function mounted() {},
     data: function data() {
         return {
             id_post: this.id,
@@ -51030,24 +51022,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        get_comments: function get_comments() {
-            var _this = this;
-
-            axios.get("/comment/" + this.id).then(function (resp) {
-
-                resp.data.forEach(function (data) {
-                    _this.$store.commit("add_comment", data);
-                });
-            });
-        },
         add_comment: function add_comment() {
-            var _this2 = this;
+            var _this = this;
 
             axios.post("/add_comment", { content: this.content, post_id: this.id_post }).then(function (resp) {
 
-                _this2.content = '';
-                _this2.$store.commit("add_comment", {
-                    post_id: _this2.id,
+                _this.content = '';
+                _this.$store.commit("add_comment", {
+                    post_id: _this.id,
                     comment: resp.data
                 });
                 new Noty({
@@ -51072,13 +51054,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.post.comments.forEach(function (resp) {
                 comments_arr2.push(resp);
             });
-            return comments_arr2.slice(Math.max(comments_arr2.length - 3, 1));
+            return comments_arr2.slice(Math.max(comments_arr2.length - 3, 0));
         },
         post: function post() {
-            var _this3 = this;
+            var _this2 = this;
 
             return this.$store.state.posts.find(function (resp) {
-                return resp.id === _this3.id;
+                return resp.id === _this2.id;
             });
         }
     }
@@ -51230,7 +51212,6 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
         nots: [],
         posts: [],
         auth_user: {},
-        comments: [],
         my_posts: []
 
     },

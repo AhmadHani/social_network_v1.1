@@ -42,6 +42,4 @@ Route::get('/home', 'HomeController@index')->name('home');
     Route::get("/count/{id}","LikeController@count");
     Route::get("/comment/{id}","CommentController@index");
     Route::post("/add_comment","CommentController@create");
-    Route::get("/count_comments/{id}","CommentController@count");
-    Route::get("/last_comments/{id}","CommentController@last_comments");
     Route::get("/my_posts","FeedController@my_posts");

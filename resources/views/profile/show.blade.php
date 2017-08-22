@@ -48,7 +48,7 @@
 
     <post class="col-lg-9"></post>
     <br />
-    <feed :giveprofile="false" class="col-lg-9"></feed>
+    <feed :giveprofile="true" class="col-lg-9"></feed>
 </div>
 
 

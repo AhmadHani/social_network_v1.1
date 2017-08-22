@@ -26,7 +26,7 @@
 export default {
     props:['id'],
     mounted(){
-        this.get_comments()
+        
     },
     data(){
         return {
@@ -36,16 +36,7 @@ export default {
              }
     },
     methods:{
-    get_comments(){
-        axios.get("/comment/"+this.id).then((resp)=>{
-            
-            resp.data.forEach((data)=>{
-                this.$store.commit("add_comment",data);
-            })
-        })
-    },
- 
-    add_comment(){
+      add_comment(){
         axios.post("/add_comment",{content:this.content,post_id:this.id_post}).then((resp)=>{
             
             this.content = '';
@@ -84,7 +75,7 @@ new Noty({
         this.post.comments.forEach((resp)=>{
             comments_arr2.push(resp);
         })
-        return comments_arr2.slice(Math.max(comments_arr2.length - 3, 1))
+        return comments_arr2.slice(Math.max(comments_arr2.length - 3, 0))
 ;
         },
       post(){

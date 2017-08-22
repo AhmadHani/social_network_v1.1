@@ -32,15 +32,10 @@ import Comment from "./Comment.vue";
 export default {
     mounted(){
         this.get_feed()
-        this.get_my_posts()
+        this.my_posts()
     },
     components:{
         Like,Comment
-    },
-    data(){
-        return {
-            profile:this.giveprofile
-        }
     },
     props:['giveprofile'],
   methods:{
@@ -53,23 +48,22 @@ export default {
       });
       
   },
-  get_my_posts(){
-          axios.get("/my_posts").then((resp)=>{
-              resp.data.forEach((data)=>{
-                  this.$store.commit("add_my_posts",data);
-              })
+  my_posts(){
+      axios.get("/my_posts").then((resp)=>{
+          resp.data.forEach((data)=>{
+            this.$store.commit("add_my_posts",data);
           })
-      }
+      })
+  }
 },
 computed:{
-   
     
    posts(){
-       if(this.profile === true){
+    if(this.giveprofile === true){
+        return this.$store.getters.my_posts;
+    }else{
         return this.$store.getters.all_posts;
-       }else{
-return this.$store.getters.my_posts;      
-       }
+    } 
     }
 }
 }

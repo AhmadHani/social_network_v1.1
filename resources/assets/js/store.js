@@ -11,7 +11,6 @@ export const store = new Vuex.Store({
             nots:[],
             posts:[],
             auth_user:{},
-            comments:[],
             my_posts:[]
                 
         },
